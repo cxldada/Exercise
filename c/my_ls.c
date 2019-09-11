@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <pwd.h>
+#include <grp.h>
 #include <sys/stat.h>
 
 bool isAll = false;         // 全部显示(包括隐藏文件)
@@ -39,7 +42,9 @@ void handlerArgs(char *args[], unsigned size) {
     }
 }
 
-int getTypeAndAccessString(struct stat *file_stat, char *res) {
+int printTypeAndAccessString(struct stat *file_stat) {
+    char res[10];
+
     if (S_ISDIR(file_stat->st_mode))
         res[0] = 'd';
     else if (S_ISLNK(file_stat->st_mode))
@@ -107,8 +112,7 @@ int getTypeAndAccessString(struct stat *file_stat, char *res) {
         res[9] = '-';
     }
 
-    res[10] = '\n';
-
+    printf("%s ", res);
     return 0;
 }
 
@@ -116,13 +120,36 @@ void showDir(char *dir) {
 }
 
 void showFile(char *file, struct stat *file_stat) {
-    char type_access[11] = "";
-
-    if (getTypeAndAccessString(file_stat, type_access) != 0) {
-        printf("%s: can't get file mode\n\n", file);
+    if (!isPerticular) {
+        printf("%1s ", file);
         return;
     }
-    printf("%s", type_access);
+
+    if (printTypeAndAccessString(file_stat) != 0) {
+        printf("%1s: can't get file mode\n\n", file);
+        return;
+    }
+
+    printf("%1d ", file_stat->st_nlink);
+    struct passwd *uinfo;
+    struct group *ginfo;
+
+    if((uinfo = getpwuid(file_stat->st_uid)) != NULL)  {
+        printf("%1s ", uinfo->pw_name);
+    }
+
+    if((ginfo = getgrgid(file_stat->st_gid)) != NULL) {
+        printf("%1s ",ginfo->gr_name);
+    }
+
+    printf("%1d ", file_stat->st_size);
+    time_t modff_time = file_stat->st_mtime;
+    struct tm *time;
+    if ((time = localtime(&modff_time)) != NULL) {
+        printf("%1d %1d %d:%d ", time->tm_mon, time->tm_mday, time->tm_hour, time->tm_sec);
+    }
+
+    printf("%1s ", file);
 }
 
 void handlerDirs(char *dirs[], unsigned size) {
@@ -157,12 +184,14 @@ int main(int argc, char *argv[]) {
 
     char *dirs[arr_size];
     char *args[arr_size];
+    int dirsz = 0;
+    int argsz = 0;
 
     for (int i = 1; i < argc; ++i) {
         if (argv[i][0] == '-') {
-            args[i - 1] = argv[i];
+            args[argsz++] = argv[i];
         } else {
-            dirs[i - 1] = argv[i];
+            dirs[dirsz++] = argv[i];
         }
     }
 
