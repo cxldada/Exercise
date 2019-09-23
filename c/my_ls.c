@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 #include <pwd.h>
 #include <grp.h>
 #include <sys/stat.h>
@@ -112,7 +113,7 @@ int printTypeAndAccessString(struct stat *file_stat) {
         res[9] = '-';
     }
 
-    printf("%s ", res);
+    printf("%10s ", res);
     return 0;
 }
 
@@ -126,30 +127,30 @@ void showFile(char *file, struct stat *file_stat) {
     }
 
     if (printTypeAndAccessString(file_stat) != 0) {
-        printf("%1s: can't get file mode\n\n", file);
+        printf("%s: can't get file mode\n\n", file);
         return;
     }
 
-    printf("%1d ", file_stat->st_nlink);
+    printf("%2d ", file_stat->st_nlink);
     struct passwd *uinfo;
     struct group *ginfo;
 
     if((uinfo = getpwuid(file_stat->st_uid)) != NULL)  {
-        printf("%1s ", uinfo->pw_name);
+        printf("%2s ", uinfo->pw_name);
     }
 
     if((ginfo = getgrgid(file_stat->st_gid)) != NULL) {
-        printf("%1s ",ginfo->gr_name);
+        printf("%2s ",ginfo->gr_name);
     }
 
-    printf("%1d ", file_stat->st_size);
-    time_t modff_time = file_stat->st_mtime;
-    struct tm *time;
-    if ((time = localtime(&modff_time)) != NULL) {
-        printf("%1d %1d %d:%d ", time->tm_mon, time->tm_mday, time->tm_hour, time->tm_sec);
+    printf("%2lld ", file_stat->st_size);
+    struct tm *accesstime;
+    if ((accesstime = localtime(&file_stat->st_atime)) != NULL) {
+      printf("%2d %2d %02d:%02d ", accesstime->tm_mon + 1, accesstime->tm_mday,
+             accesstime->tm_hour, accesstime->tm_min);
     }
 
-    printf("%1s ", file);
+    printf("%2s ", file);
 }
 
 void handlerDirs(char *dirs[], unsigned size) {
