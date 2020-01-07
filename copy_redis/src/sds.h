@@ -1,7 +1,7 @@
 #ifndef __SDS_H
-#defind __SDS_H
+#define __SDS_H
 
-#define SDS_MAX_PREALLOC(1024 * 1024)
+#define SDS_MAX_PREALLOC (1024*1024)
 const char *SDS_NOINIT;
 
 #include <stdarg.h>
@@ -67,7 +67,7 @@ struct __attribute__((__packed__)) sdshdr64 {
 // 获取sds的长度
 static inline size_t sdslen(const sds s) {
     unsigned char flags = s[-1];
-    switch (flags & SDS_TYEPS_MASK) {
+    switch (flags & SDS_TYPE_MASK) {
         case SDS_TYPE_5:
             return SDS_TYPE_5_LEN(flags);
         case SDS_TYPE_8:
@@ -131,7 +131,7 @@ static inline void sdssetlen(sds s, size_t newlen) {
 
 // 增加sds的长度
 static inline void sdsinclen(sds s, size_t inc) {
-    unsigned char *flags = s[-1];
+    unsigned char flags = s[-1];
     switch (flags & SDS_TYPE_MASK) {
         case SDS_TYPE_5: {
             unsigned char *fp = ((unsigned char *)s) - 1;
@@ -158,7 +158,7 @@ static inline void sdsinclen(sds s, size_t inc) {
  * 满足 sdsalloc() = sdsavail() + sdslen()
  * */
 static inline size_t sdsalloc(const sds s) {
-    unsigned char *flags = s[-1];
+    unsigned char flags = s[-1];
     switch (flags & SDS_TYPE_MASK) {
         case SDS_TYPE_5:
             return SDS_TYPE_5_LEN(flags);
@@ -183,7 +183,7 @@ static inline size_t sdsalloc(const sds s) {
 // 设置sds的分配空间大小
 // sdshdr5 是无效的
 static inline void sdssetalloc(sds s, size_t newlen) {
-    unsigned char *flags = s[-1];
+    unsigned char flags = s[-1];
     switch (flags & SDS_TYPE_MASK) {
         case SDS_TYPE_5:
             // 这个结构不存在分配空间信息
@@ -210,7 +210,7 @@ sds sdsdup(const sds s);
 void sdsfree(sds s);
 sds sdsgrowzero(sds s, size_t len);
 sds sdscatlen(sds s, const void *t, size_t len);
-sds sdscat(sds s, cosnt char *t);
+sds sdscat(sds s, const char *t);
 sds sdscatsds(sds s, const sds t);
 sds sdscpylen(sds s, const char *t, size_t len);
 sds sdscpy(sds s, const char *);
