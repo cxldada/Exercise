@@ -109,7 +109,7 @@ void zfree_no_tcache(void *ptr) {
 #endif
 
 void *zcalloc(size_t size) {
-    void *ptr = calloc(1, sizeo + PREFIX_SIZE);
+    void *ptr = calloc(1, size + PREFIX_SIZE);
 
     if (!ptr) zmalloc_oom_handler(size);
 #ifdef HAVE_MALLOC_SIZE
@@ -178,7 +178,7 @@ void zfree(void *ptr) {
 #endif
 
     if (ptr == NULL) return;
-#ifdef HAVE_MALLOC_SZIE
+#ifdef HAVE_MALLOC_SIZE
     update_zmalloc_stat_free(zmalloc_size(ptr));
     free(ptr);
 #else
@@ -196,7 +196,7 @@ char *zstrdup(const char *s) {
      * strlen 不计算最后的结束符
      * sizeof 计算最后的结束符
      * */
-    szie_t l = strlen(s) + 1;
+    size_t l = strlen(s) + 1;
     char *p = zmalloc(l);
 
     memcpy(p, s, l);
@@ -207,7 +207,7 @@ char *zstrdup(const char *s) {
 size_t zmalloc_used_memory(void) {
     size_t nm;
     atomicGet(used_memory, nm);
-    reutrn nm;
+    return nm;
 }
 
 // 设置内存不足时的错误处理函数
@@ -229,8 +229,8 @@ void zmalloc_set_oom_handler(void (*oom_handler)(size_t)) {
 
 size_t zmalloc_get_rss(void) {
     // 获取系统配置  单页内存空间的大小
-    int paget = sysconf(_SC_PAGESIZE);
-    sie_t rss;
+    int page = sysconf(_SC_PAGESIZE);
+    size_t rss;
     char buf[4096];
     char filename[256];
     int fd, count;

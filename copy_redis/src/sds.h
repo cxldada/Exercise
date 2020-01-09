@@ -1,7 +1,7 @@
 #ifndef __SDS_H
 #define __SDS_H
 
-#define SDS_MAX_PREALLOC (1024*1024)
+#define SDS_MAX_PREALLOC (1024 * 1024)
 const char *SDS_NOINIT;
 
 #include <stdarg.h>
@@ -57,7 +57,7 @@ struct __attribute__((__packed__)) sdshdr64 {
 #define SDS_TYPE_BITS 3
 
 // 定义指向sds结构头的变量
-#define SDS_HDR_VAR(T, s) struct sdshdr##T *sh = (void *)((s) - (sizeof(struct sdshdr##T)))
+#define SDS_HDR_VAR(T, s) struct sdshdr##T *sh = (void *)((s) - (sizeof(struct sdshdr##T)));
 // 将变量s指向结构的初始位置
 #define SDS_HDR(T, s) ((struct sdshdr##T *)((s) - (sizeof(struct sdshdr##T))))
 
@@ -89,18 +89,22 @@ static inline size_t sdsavail(const sds s) {
     switch (flags & SDS_TYPE_MASK) {
         case SDS_TYPE_5:
             return 0;
-        case SDS_TYPE_8:
+        case SDS_TYPE_8: {
             SDS_HDR_VAR(8, s);
             return sh->alloc - sh->len;
-        case SDS_TYPE_16:
+        }
+        case SDS_TYPE_16: {
             SDS_HDR_VAR(16, s);
             return sh->alloc - sh->len;
-        case SDS_TYPE_32:
+        }
+        case SDS_TYPE_32: {
             SDS_HDR_VAR(32, s);
             return sh->alloc - sh->len;
-        case SDS_TYPE_64:
+        }
+        case SDS_TYPE_64: {
             SDS_HDR_VAR(64, s);
             return sh->alloc - sh->len;
+        }
     }
 
     return 0;
@@ -189,21 +193,21 @@ static inline void sdssetalloc(sds s, size_t newlen) {
             // 这个结构不存在分配空间信息
             break;
         case SDS_TYPE_8:
-            return SDS_HDR(8, s)->alloc = newlen;
+            SDS_HDR(8, s)->alloc = newlen;
             break;
         case SDS_TYPE_16:
-            return SDS_HDR(16, s)->alloc = newlen;
+            SDS_HDR(16, s)->alloc = newlen;
             break;
         case SDS_TYPE_32:
-            return SDS_HDR(32, s)->alloc = newlen;
+            SDS_HDR(32, s)->alloc = newlen;
             break;
         case SDS_TYPE_64:
-            return SDS_HDR(64, s)->alloc = newlen;
+            SDS_HDR(64, s)->alloc = newlen;
             break;
     }
 }
 
-sds sdsnewlen(const void *init, size_t inilen);
+sds sdsnewlen(const void *init, size_t initlen);
 sds sdsnew(const char *init);
 sds sdsempty(void);
 sds sdsdup(const sds s);
@@ -242,7 +246,7 @@ sds sdstrim(sds s, const char *cset);
 // ssize_t 指 有符号int
 void sdsrange(sds s, ssize_t start, ssize_t end);
 void sdsupdatelen(sds s);
-void csdsclear(sds s);
+void sdsclear(sds s);
 int sdscmp(const sds s1, const sds s2);
 sds *sdssplitlen(const char *s, ssize_t len, const char *sep, int seplen, int *count);
 void sdsgreesplitres(sds *tokens, int count);
