@@ -1,12 +1,12 @@
 #ifndef __ZMALLOC_H
 #define __ZMALLOC_H
 
-#define __xstr(s) __str(s)
 /**
  * # 字符串化操作
  * ## 链接操作
  * #@ 字符化操作
  * */
+#define __xstr(s) __str(s)
 #define __str(s) #s
 
 #if defined(USE_TCMALLOC)
@@ -44,6 +44,9 @@
 #endif
 #endif
 
+/* We can enable the Redis defrag capabilities only if we are using Jemalloc
+ * and the version used is our special version modified for Redis having
+ * the ability to return per-allocation fragmentation hints. */
 #if defined(USE_JEMALLOC) && defined(JEMALLOC_FRAG_HINT)
 #define HAVE_DEFRAG
 #endif
