@@ -217,9 +217,8 @@ sds sdscatlen(sds s, const void *t, size_t len);
 sds sdscat(sds s, const char *t);
 sds sdscatsds(sds s, const sds t);
 sds sdscpylen(sds s, const char *t, size_t len);
-sds sdscpy(sds s, const char *);
-
-sds sdscatvprintf(sds s, const char *fmt, ...);
+sds sdscpy(sds s, const char *t);
+sds sdscatvprintf(sds s, const char *fmt, va_list ap);
 /**
  * __GNUC__ 表示 gcc编译器的主版本号
  * __GNUC_MINOR__ 表示gcc编译器的副版本号
@@ -249,7 +248,7 @@ void sdsupdatelen(sds s);
 void sdsclear(sds s);
 int sdscmp(const sds s1, const sds s2);
 sds *sdssplitlen(const char *s, ssize_t len, const char *sep, int seplen, int *count);
-void sdsgreesplitres(sds *tokens, int count);
+void sdsfreesplitres(sds *tokens, int count);
 void sdstolower(sds s);
 void sdstoupper(sds s);
 sds sdsfromlonglong(long long value);
