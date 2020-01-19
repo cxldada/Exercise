@@ -1,19 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main1() {
-	/*
-		var a int = 65
-		b := string(a)
-		fmt.Println(b)
-	*/
+	d := time.Duration(time.Second * 3)
+	t := time.NewTicker(d)
 
-label:
-	for i := 0; i < 10; i++ {
-		for {
-			fmt.Println(i)
-			continue label
-		}
+	defer t.Stop()
+
+	for {
+		<-t.C
+		fmt.Println("...")
 	}
 }

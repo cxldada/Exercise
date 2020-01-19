@@ -5,7 +5,10 @@ import (
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/alidns"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
+
+var lastIP string
 
 func main() {
 	client, err := alidns.NewClientWithAccessKey("cn-hangzhou",
@@ -16,13 +19,24 @@ func main() {
 		fmt.Println(err.Error())
 	}
 
-	records := getDomainRecords(client)
-	fmt.Println(records)
+	d := time.Duration(time.Second * 300)
+	t := time.NewTicker(d)
 
-	updateDomainRecord(client, records)
+	for {
+		<-t.C
 
-	records = getDomainRecords(client)
-	fmt.Println(records)
+		newIP := getExternalIP()
+		if newIP == lastIP {
+			fmt.Println("like ip")
+			continue
+		}
+
+		lastIP = newIP
+		records := getDomainRecords(client)
+
+		updateDomainRecord(client, records)
+		//records = getDomainRecords(client)
+	}
 }
 
 func getDomainRecords(client *alidns.Client) []alidns.Record {
@@ -59,8 +73,6 @@ func getExternalIP() string {
 }
 
 func updateDomainRecord(client *alidns.Client, records []alidns.Record) {
-	var publicIP = getExternalIP()
-
 	for i := 0; i < len(records); i++ {
 		record := records[i]
 
@@ -69,7 +81,7 @@ func updateDomainRecord(client *alidns.Client, records []alidns.Record) {
 
 		request.RecordId = record.RecordId
 		request.RR = record.RR
-		request.Value = publicIP
+		request.Value = lastIP
 		request.Type = record.Type
 
 		response, err := client.UpdateDomainRecord(request)
