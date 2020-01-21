@@ -23,8 +23,6 @@ func main() {
 	t := time.NewTicker(d)
 
 	for {
-		<-t.C
-
 		newIP := getExternalIP()
 		if newIP == lastIP {
 			fmt.Println("like ip")
@@ -35,7 +33,8 @@ func main() {
 		records := getDomainRecords(client)
 
 		updateDomainRecord(client, records)
-		//records = getDomainRecords(client)
+
+		<-t.C
 	}
 }
 
