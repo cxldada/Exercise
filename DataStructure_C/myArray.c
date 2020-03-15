@@ -86,9 +86,18 @@ int ArrayDelete(MyArray *array, int i, int *elem) {
     return OK;
 }
 
+int uniteArray(MyArray *p, MyArray q) {
+    for (int i = 0; i < q.length; ++i) {
+        if(LocateElem(*p, q.arr[i]) == ERROR) {
+            ArrayInsert(p, p->length, q.arr[i]);
+        }
+    }
+    return OK;
+}
+
 int main(int argc, char *argv[]) {
     MyArray myarr;
-    if(InitArray(&myarr) == ERROR)
+    if (InitArray(&myarr) == ERROR)
         printf("initArray error\n");
 
     printf("array empty: %d\n", ArrayEmpty(myarr));

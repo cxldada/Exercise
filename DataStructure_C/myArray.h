@@ -21,5 +21,6 @@ int GetElem(MyArray array, int i, int *elem);
 int LocateElem(MyArray array, int elem);
 int ArrayInsert(MyArray *array, int i, int elem);
 int ArrayDelete(MyArray *array, int i, int *elem);
+int uniteArray(MyArray *p, MyArray q);
 
 #endif
