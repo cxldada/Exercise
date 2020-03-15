@@ -97,7 +97,9 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < 64; ++i)
         ArrayInsert(&myarr, 1, i + 12);
 
+    printf("before change: %d\n", myarr.arr[63]);
     ArrayInsert(&myarr, myarr.length, 1000);
+    printf("after change: %d\n", myarr.arr[64]);
 
     int del = 0;
     ArrayDelete(&myarr, 10, &del);
