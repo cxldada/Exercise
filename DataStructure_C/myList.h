@@ -13,7 +13,7 @@ int InitList(LinkList list);
 int ClearList(LinkList list);
 bool ArrayEmpty(LinkList list);
 int ListLength(LinkList list);
-int GetElem(LinkList list, int i, int *elem);
+int GetElem(LinkList list, int i, ListNode *elem);
 int LocateElem(LinkList list, int elem);
 int ListInsert(LinkList list, int i, int elem);
 int ListDelete(LinkList list, int i, int *elem);
