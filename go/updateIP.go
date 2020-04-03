@@ -12,8 +12,8 @@ var lastIP string
 
 func main() {
 	client, err := alidns.NewClientWithAccessKey("cn-hangzhou",
-		"LTAI4FxhuGfCTegzxwUTiVuN",
-		"lLetneSTgffl5OE5Q1rtdo7wf7EBon")
+		"1",
+		"1")
 
 	if err != nil {
 		fmt.Println(err.Error())
