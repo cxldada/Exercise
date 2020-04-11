@@ -9,8 +9,15 @@
 #define OVERFLOW -1
 #define Status int
 
+#define ElemType int
+
+typedef int (*compare_func)(ElemType l,ElemType  r);
+typedef void (*visit_func)(ElemType e);
+
 // sequence macro
 #define _SQ_MAXSIZE_ 100
-#define _SQ_ELEM_TYPE int
+
+// link list macro
+#define _LL_ELEM_TYPE_ int
 
 #endif
