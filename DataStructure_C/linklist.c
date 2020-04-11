@@ -113,3 +113,9 @@ int ListDelete(LinkList list, int i, ElemType *elem) {
     free(pDel);
     return OK;
 }
+
+int main(int argc, char const *argv[])
+{
+    return 0;
+}
+
