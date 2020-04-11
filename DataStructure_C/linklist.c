@@ -56,7 +56,7 @@ int GetElem(LinkList list, int i, ElemType *elem) {
     return OK;
 }
 
-int compare(ElemType l,ElemType r) {
+int compare(ElemType l, ElemType r) {
     return (l == r);
 }
 
@@ -73,7 +73,7 @@ LNode *LocateElem(LinkList list, ElemType elem, compare_func func) {
 }
 
 int ListInsert(LinkList list, int i, ElemType elem) {
-    if(i < 1 || i > list->data)
+    if (i < 1 || i > list->data)
         return ERROR;
 
     LNode *pNew = malloc(sizeof(LNode));
@@ -114,8 +114,50 @@ int ListDelete(LinkList list, int i, ElemType *elem) {
     return OK;
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     return 0;
 }
 
+// have head node
+Status ListInsert_Dul(DuLinkList list, int i, ElemType e) {
+    if (i < 1 || i > list->data)
+        return ERROR;
+
+    DuLNode *pNew = malloc(sizeof(DuLNode));
+    if (!pNew)
+        return ERROR;
+    pNew->data = e;
+
+    int pos = 1;
+    DuLNode *pNode = list->next;
+    while (pNode && pos < i) {
+        pNode = pNode->next;
+        ++pos;
+    }
+
+    pNew->prior = pNode->prior;
+    pNew->prior->next = pNew;
+    pNew->next = pNode;
+    pNode->prior = pNew;
+
+    ++list->data;
+    return OK;
+}
+
+Status ListDelete_Dul(DuLinkList list, int i, ElemType *elem) {
+    if (i < 1 || i > list->data)
+        return ERROR;
+
+    int pos = 1;
+    DuLNode *pNode = list->next;
+    while (pNode && pos < i) {
+        pNode = pNode->next;
+        ++pos;
+    }
+
+    pNode->prior->next = pNode->next;
+    pNode->next->prior = pNode->prior;
+    free(pNode);
+    --list->data;
+    return OK;
+}
