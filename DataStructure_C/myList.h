@@ -4,10 +4,12 @@
 #include <stdbool.h>
 
 // 单向链表
-typedef struct {
+typedef struct ListNode {
     int data;
-    ListNode *next;
-} ListNode, *LinkList;
+    struct ListNode *next;
+} ListNode;
+
+typedef struct ListNode *LinkList;
 
 int InitList(LinkList list);
 int ClearList(LinkList list);

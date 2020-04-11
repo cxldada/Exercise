@@ -82,6 +82,7 @@ int ListDelete(LinkList list, int i, int *elem) {
     if (GetElem(list, (i - 1), prior) != OK)
         return ERROR;
 
+    *elem = prior->next->data;
     prior->next = prior->next->next;
 
     return OK;
