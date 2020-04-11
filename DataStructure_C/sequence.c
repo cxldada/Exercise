@@ -2,7 +2,7 @@
 
 // initialize sequence list
 Status InitList(SqList *l) {
-    l->data = malloc(_SQ_MAXSIZE_ * sizeof(ElemType));
+    l->data = malloc(_MAXSIZE_ * sizeof(ElemType));
     if(!l->data)
         exit(OVERFLOW);
 
@@ -11,23 +11,25 @@ Status InitList(SqList *l) {
 }
 
 Status DestoryList(SqList *l) {
-    free(l->data);
+    for (int i = 0; i < l->length; ++i) {
+        free(l->data[i]);
+    }
     l->length = 0;
     return OK;
 }
 
-Status ClearList(SqList *l){
-    free(l->data); // free data
+Status ClearList(SqList *l) {
+    free(l->data);  // free data
 
-    l->data = malloc(_SQ_MAXSIZE_ * sizeof(ElemType));
-    if(!l->data)
+    l->data = malloc(_MAXSIZE_ * sizeof(ElemType));
+    if (!l->data)
         exit(OVERFLOW);
 
     l->length = 0;
     return OK;
 }
 
-int ListEmpty(SqList l){
+int ListEmpty(SqList l) {
     return (l.length == 0);
 }
 
@@ -37,7 +39,7 @@ int ListLength(SqList l) {
 
 // get element data from position i
 Status GetElem(SqList l, int i, ElemType *e) {
-    if(i < 1 || i > l.length)
+    if (i < 1 || i > l.length)
         return ERROR;
 
     *e = l.data[i - 1];
@@ -45,7 +47,7 @@ Status GetElem(SqList l, int i, ElemType *e) {
 }
 
 int compare(ElemType l, ElemType r) {
-    if(l == r)
+    if (l == r)
         return 1;
 
     return 0;
@@ -64,7 +66,7 @@ int LocateElem(SqList l, ElemType e, compare_func func) {
 // find prior element of cur_e
 Status PriorElem(SqList l, ElemType cur_e, ElemType *pre_e) {
     int pos = LocateElem(l, cur_e, &compare);
-    if(pos != 1)
+    if (pos != 1)
         return GetElem(l, (pos - 1), pre_e);
 
     return ERROR;
@@ -79,7 +81,7 @@ Status NextElem(SqList l, ElemType cur_e, ElemType *next_e) {
 }
 
 Status ListInsert(SqList *l, int i, ElemType e) {
-    if (i < 1 || (l->length + 1) < i || l->length == _SQ_MAXSIZE_)
+    if (i < 1 || (l->length + 1) < i || l->length == _MAXSIZE_)
         return ERROR;
 
     for (int pos = l->length; pos > (i - 1); --pos) {
@@ -92,7 +94,7 @@ Status ListInsert(SqList *l, int i, ElemType e) {
 }
 
 Status ListDelete(SqList *l, int i, ElemType *e) {
-    if(i < 1 || (i > l->length))
+    if (i < 1 || (i > l->length))
         return ERROR;
 
     *e = l->data[i - 1];
@@ -109,19 +111,17 @@ void visit(ElemType e) {
 }
 
 void ListTraverse(SqList l, visit_func func) {
-    for (int i = 0; i < l.length;++i)
+    for (int i = 0; i < l.length; ++i)
         func(l.data[i]);
 }
 
-
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     SqList l;
     InitList(&l);
     printf("is empty: %d\n", ListEmpty(l));
     ListInsert(&l, 1, 100);
     printf("is empty: %d\n", ListEmpty(l));
-    for (int i = 2; i < 11;++i)
+    for (int i = 2; i < 11; ++i)
         ListInsert(&l, i, i + 10);
 
     ElemType elem;
