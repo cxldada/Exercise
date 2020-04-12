@@ -56,7 +56,7 @@
           (cxldada-member obj (cdr lst))))
   )
 
-(cxldada-member 'b '(a b c))
+;; (cxldada-member 'b '(a b c))
 
 ;; output functions
 (format t "~A plus ~A equals ~A. ~%" 2 3 (+ 2 3))
@@ -67,7 +67,7 @@
   (read)
   )
 
-(cxldada-askem "How old are you?")
+;; (cxldada-askem "How old are you?")
 
 ;; local variable
 (defun cxldada-test()
@@ -76,7 +76,7 @@
     )
   )
 
-(cxldada-test)
+;; (cxldada-test)
 
 ;; global variable
 (defparameter cxldada-haha 1)
@@ -89,9 +89,68 @@
 
 ;; assignment operator
 (setf cxldada-haha 100)
+;; cxldada-haha
 
-cxldada-haha
+;; "do" is macro
+(defun cxldada-show-squares (start end)
+  (do ((i start (+ i 1)))
+      ((> i end) 'done)
+    (format t "~A ~A~%" i (* i i))
+      )
+  )
 
+;; (cxldada-show-squares 1 10)
+
+
+;; progn
+(defun cxldada-show-squares-progn (i end)
+  (if (> i end)
+      'done
+      (progn
+        (format t "~A ~A~%" i (* i i))
+        (cxldada-show-squares-progn (+ i 1) end)
+        )
+      )
+  )
+
+;; (cxldada-show-squares-progn 1 10)
+
+;; dolist
+(defun cxldada-length (lst)
+  (let ((len 0))
+    (dolist (obj lst)
+      (setf len (+ len 1)))
+    len
+    )
+  )
+;;(cxldada-length '(a b c d))
+
+;; function
+(function +)
+
+;; use #' represent function
+#'+
+
+;; apply
+(apply #'+ '(1 2 3 4))
+
+;; funcall
+(funcall #'+ 1 2 3 4)
+
+;; lambda
+((lambda (x) (+ x 100)) 22)
+
+(funcall #'(lambda (x) (+ x 121))
+         22)
+
+;;;;;;;;;;;;;; exercises
+(+ (- 5 1) (+ 3 7))
+
+(list 1 (+ 2 3))
+
+(if (listp 1) (+ 1 2) (+ 3 4))
+
+(list (and (listp 3) t) (+ 1 2))
 
 
 
