@@ -1,2 +1,3 @@
 app
 *.dSYM
+.DS_Store
