@@ -1,7 +1,7 @@
 #include "stack.h"
 
 Status InitStack(SqStack *stack) {
-    stack->base = malloc(_MAXSIZE_ * sizeof(ElemType));
+    stack->base = malloc(_MAXSIZE_ * sizeof(StackElemType));
     if (!stack->base)
         return ERROR;
 
@@ -19,7 +19,7 @@ Status DestoryStack(SqStack *stack) {
 }
 
 Status ClearStack(SqStack *stack) {
-    ElemType e;
+    StackElemType e;
     while (Pop(stack, &e)) {
     }
     return OK;
@@ -33,14 +33,14 @@ int StackLength(SqStack stack) {
     return (stack.top - stack.base);
 }
 
-ElemType GetTop(SqStack stack) {
+StackElemType GetTop(SqStack stack) {
     if (stack.top != stack.base)
         *(stack.top - 1);
 
     return ERROR;
 }
 
-Status Push(SqStack *stack, ElemType e) {
+Status Push(SqStack *stack, StackElemType e) {
     if(stack->top - stack->base == stack->stacksize)
         return ERROR;
 
@@ -49,7 +49,7 @@ Status Push(SqStack *stack, ElemType e) {
     return OK;
 }
 
-Status Pop(SqStack *stack, ElemType *e) {
+Status Pop(SqStack *stack, StackElemType *e) {
     if (stack->top == stack->base)
         return ERROR;
 

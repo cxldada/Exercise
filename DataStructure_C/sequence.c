@@ -2,7 +2,7 @@
 
 // initialize sequence list
 Status InitList(SqList *l) {
-    l->data = malloc(_MAXSIZE_ * sizeof(ElemType));
+    l->data = malloc(_MAXSIZE_ * sizeof(SequenceElemType ));
     if(!l->data)
         exit(OVERFLOW);
 
@@ -21,7 +21,7 @@ Status DestoryList(SqList *l) {
 Status ClearList(SqList *l) {
     free(l->data);  // free data
 
-    l->data = malloc(_MAXSIZE_ * sizeof(ElemType));
+    l->data = malloc(_MAXSIZE_ * sizeof(SequenceElemType ));
     if (!l->data)
         exit(OVERFLOW);
 
@@ -38,7 +38,7 @@ int ListLength(SqList l) {
 }
 
 // get element data from position i
-Status GetElem(SqList l, int i, ElemType *e) {
+Status GetElem(SqList l, int i, SequenceElemType  *e) {
     if (i < 1 || i > l.length)
         return ERROR;
 
@@ -46,7 +46,7 @@ Status GetElem(SqList l, int i, ElemType *e) {
     return OK;
 }
 
-int compare(ElemType l, ElemType r) {
+int compare(SequenceElemType  l, SequenceElemType  r) {
     if (l == r)
         return 1;
 
@@ -54,7 +54,7 @@ int compare(ElemType l, ElemType r) {
 }
 
 // using func to find position of e in l
-int LocateElem(SqList l, ElemType e, compare_func func) {
+int LocateElem(SqList l, SequenceElemType  e, compare_func func) {
     for (int i = 0; i < l.length; ++i) {
         if (func(e, l.data[i]))
             return i + 1;
@@ -64,7 +64,7 @@ int LocateElem(SqList l, ElemType e, compare_func func) {
 }
 
 // find prior element of cur_e
-Status PriorElem(SqList l, ElemType cur_e, ElemType *pre_e) {
+Status PriorElem(SqList l, SequenceElemType  cur_e, SequenceElemType  *pre_e) {
     int pos = LocateElem(l, cur_e, &compare);
     if (pos != 1)
         return GetElem(l, (pos - 1), pre_e);
@@ -72,7 +72,7 @@ Status PriorElem(SqList l, ElemType cur_e, ElemType *pre_e) {
     return ERROR;
 }
 
-Status NextElem(SqList l, ElemType cur_e, ElemType *next_e) {
+Status NextElem(SqList l, SequenceElemType  cur_e, SequenceElemType  *next_e) {
     int pos = LocateElem(l, cur_e, &compare);
     if (pos != l.length)
         return GetElem(l, (pos + 1), next_e);
@@ -80,7 +80,7 @@ Status NextElem(SqList l, ElemType cur_e, ElemType *next_e) {
     return ERROR;
 }
 
-Status ListInsert(SqList *l, int i, ElemType e) {
+Status ListInsert(SqList *l, int i, SequenceElemType  e) {
     if (i < 1 || (l->length + 1) < i || l->length == _MAXSIZE_)
         return ERROR;
 
@@ -93,7 +93,7 @@ Status ListInsert(SqList *l, int i, ElemType e) {
     return OK;
 }
 
-Status ListDelete(SqList *l, int i, ElemType *e) {
+Status ListDelete(SqList *l, int i, SequenceElemType  *e) {
     if (i < 1 || (i > l->length))
         return ERROR;
 
@@ -106,7 +106,7 @@ Status ListDelete(SqList *l, int i, ElemType *e) {
     return OK;
 }
 
-void visit(ElemType e) {
+void visit(SequenceElemType  e) {
     printf("%d \n", e);
 }
 
@@ -124,7 +124,7 @@ int main(int argc, char const *argv[]) {
     for (int i = 2; i < 11; ++i)
         ListInsert(&l, i, i + 10);
 
-    ElemType elem;
+    SequenceElemType  elem;
     ListDelete(&l, 10, &elem);
 
     ListTraverse(l, &visit);

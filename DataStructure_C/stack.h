@@ -3,16 +3,20 @@
 
 #include "macro.h"
 
+#ifndef StackElemType
+#define StackElemType int
+#endif
+
 // sequence type stack
 typedef struct SqStack {
-    ElemType *base;
-    ElemType *top;
+    StackElemType *base;
+    StackElemType *top;
     int stacksize;
 } SqStack;
 
 // link type stack
 typedef struct StackNode {
-    ElemType data;
+    StackElemType data;
     struct StackNode *next;
 } StackNode, *LinkStack;
 
@@ -22,9 +26,9 @@ Status ClearStack(SqStack *stack);
 
 int StackEmpty(SqStack stack);
 int StackLength(SqStack stack);
-ElemType GetTop(SqStack stack);
+StackElemType GetTop(SqStack stack);
 
-Status Push(SqStack *stack, ElemType e);
-Status Pop(SqStack *stack, ElemType *e);
+Status Push(SqStack *stack, StackElemType e);
+Status Pop(SqStack *stack, StackElemType *e);
 
 #endif

@@ -3,11 +3,14 @@
 
 #include "macro.h"
 
+#ifndef BinTreeElemType
+#define BinTreeElemType int
+#endif
+
 // link structure
 typedef struct TNode {
-    ElemType data;
-    struct TNode *left;
-    struct TNode *right;
+    BinTreeElemType data;
+    struct TNode *lchild, rchild;
 } TNode, *BinTree;
 
 // create bin-tree.
@@ -18,16 +21,20 @@ TNode root(BinTree t);
 TNode parent(BinTree t, TNode p);
 BinTree leftChild(BinTree t, TNode p);
 BinTree rightChild(BinTree t, TNode p);
-Status insertElem(BinTree t, ElemType e);
-Status deleteElem(BinTree t, ElemType e);
+Status insertElem(BinTree t, BinTreeElemType e);
+Status deleteElem(BinTree t, BinTreeElemType e);
 
 // traverse
 // depth order
-void preOrder(BinTree t);
-void inOrder(BinTree t);
-void postOrder(BinTree t);
+Status preOrder(BinTree t, visit_func func);
+Status inOrder(BinTree t, visit_func func);
+Status postOrder(BinTree t, visit_func func);
+
+Status preOrder_Sq(BinTree t, visit_func func);
+Status inOrder_Sq(BinTree t, visit_func func);
+Status postOrder_sq(BinTree t, visit_func func);
 
 // breadth order
-void levelOrder(BinTree t);
+Status levelOrder(BinTree t, visit_func func);
 
 #endif

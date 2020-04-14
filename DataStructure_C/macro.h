@@ -8,7 +8,6 @@
 #define ERROR 0
 #define OVERFLOW -1
 #define Status int
-#define ElemType int
 #define _MAXSIZE_ 100
 
 typedef int (*compare_func)(ElemType l,ElemType  r);

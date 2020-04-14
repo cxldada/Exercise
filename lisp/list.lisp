@@ -40,18 +40,67 @@
 
 ;;(append '(a b) '(c d) '(e) '(f g))
 
+;; Example: compression
+;; run-length encoding
+(defun cxldada-compress (x)
+  (if (consp x)
+      (cxldada-compr (car x) 1 (cdr x))
+      x
+      )
+  )
 
+(defun cxldada-compr (elt n lst)
+  (if (null lst)
+      (list (n-elts elt n))
+      (let ((next (car lst)))
+        (if (eql next elt)
+            (cxldada-compr elt (+ n 1) (cdr lst))
+            (cons (n-elts elt n)
+                  (cxldada-compr next 1 (cdr lst)))
+            )
+        )
+      )
+  )
 
+(defun n-elts (elt n)
+  (if (> n 1)
+      (list n elt)
+      elt
+      )
+  )
 
+(cxldada-compress '(1 1 1 0 1 0 0 0 0 1))
 
+(defun cxldada-uncompress (lst)
+  (if (null lst)
+      nil
+      (let ((elt (car lst))
+            (rest (uncompress (cdr lst))))
+        (if (consp elt)
+            (append (apply #'list-of elt)
+                    rest)
+            (cons elt rest)))))
 
+(defun list-of (n elt)
+  (if (zerop n)
+      nil
+      (cons elt (list-of (- n 1) elt))))
 
+;; Access
+(nth 0 '(a b c))
 
+(nthcdr 2 '(a b c))
 
+(defun cxldada-nthcdr (n lst)
+  (if (equal n 0)
+      lst
+      (cxldada-nthcdr (- n 1) (cdr lst))
+      )
+  )
 
+(cxldada-nthcdr 2 '(a b c))
 
-
-
+(last '(a b c))
 
 
 

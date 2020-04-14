@@ -41,7 +41,7 @@ int ListLength(LinkList list) {
     return list->data;
 }
 
-int GetElem(LinkList list, int i, ElemType *elem) {
+int GetElem(LinkList list, int i, LinkListElemType *elem) {
     if (i < 1 || i > list->data)
         return ERROR;
 
@@ -56,11 +56,11 @@ int GetElem(LinkList list, int i, ElemType *elem) {
     return OK;
 }
 
-int compare(ElemType l, ElemType r) {
+int compare(LinkListElemType l, LinkListElemType r) {
     return (l == r);
 }
 
-LNode *LocateElem(LinkList list, ElemType elem, compare_func func) {
+LNode *LocateElem(LinkList list, LinkListElemType elem, compare_func func) {
     LNode *p = list->next;
     while (p) {
         if (func(elem, p->data))
@@ -72,7 +72,7 @@ LNode *LocateElem(LinkList list, ElemType elem, compare_func func) {
     return NULL;
 }
 
-int ListInsert(LinkList list, int i, ElemType elem) {
+int ListInsert(LinkList list, int i, LinkListElemType elem) {
     if (i < 1 || i > list->data)
         return ERROR;
 
@@ -95,7 +95,7 @@ int ListInsert(LinkList list, int i, ElemType elem) {
     return OK;
 }
 
-int ListDelete(LinkList list, int i, ElemType *elem) {
+int ListDelete(LinkList list, int i, LinkListElemType *elem) {
     if (i < 1 || i > list->data)
         return ERROR;
 
@@ -119,7 +119,7 @@ int main(int argc, char const *argv[]) {
 }
 
 // have head node
-Status ListInsert_Dul(DuLinkList list, int i, ElemType e) {
+Status ListInsert_Dul(DuLinkList list, int i, LinkListElemType e) {
     if (i < 1 || i > list->data)
         return ERROR;
 
@@ -144,7 +144,7 @@ Status ListInsert_Dul(DuLinkList list, int i, ElemType e) {
     return OK;
 }
 
-Status ListDelete_Dul(DuLinkList list, int i, ElemType *elem) {
+Status ListDelete_Dul(DuLinkList list, int i, LinkListElemType *elem) {
     if (i < 1 || i > list->data)
         return ERROR;
 
