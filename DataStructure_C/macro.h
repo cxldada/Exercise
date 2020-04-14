@@ -10,6 +10,6 @@
 #define Status int
 #define TRUE 1
 #define FALSE 0 
-#define _MAXSIZE_ 200000000
+#define _MAXSIZE_ 100
 
 #endif

@@ -83,10 +83,10 @@ Status postOrder(BinTree t, visit_func func) {
 }
 
 Status preOrder_Sq(BinTree t, visit_func func) {
-    
 }
 
 Status inOrder_Sq(BinTree t, visit_func func) {
+
 }
 
 Status postOrder_sq(BinTree t, visit_func func) {

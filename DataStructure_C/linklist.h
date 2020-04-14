@@ -12,8 +12,6 @@ typedef struct LNode {
     LinkListElemType data;
     struct LNode *next;
 } LNode, *LinkList;
-//typedef struct LNode LNode;
-//typedef struct LNode *LinkList;
 
 // 双向链表
 typedef struct DuLNode {
@@ -21,8 +19,6 @@ typedef struct DuLNode {
     struct DuLNode *prior;
     struct DuLNode *next;
 } DuLNode, *DuLinkList;
-//typedef struct DuLNode DuLNode;
-//typedef struct DuLNode *DuLinkList;
 
 // initialize
 Status InitList(LinkList list);
