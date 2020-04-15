@@ -102,32 +102,83 @@
 
 (last '(a b c))
 
+(mapcar #'(lambda (x) (+ x 10))
+        '(1 2 3)
+        )
 
+(mapcar #'list
+        '(a b c)
+        '(1 2 3 4)
+        )
 
+(maplist
+ #'(lambda (x) x)
+ '(a b c)
+ )
 
+(defun cxldada-copy-tree (tr)
+  (if (atom tr)
+      tr
+      (cons (cxldada-copy-tree (car tr))
+            (cxldada-copy-tree (cdr tr))
+            )
+      )
+  )
 
+(cxldada-copy-tree '(a (b c) d))
 
+(member 'b '(a b c))
 
+(member '(a) '((b) (a)) :test #'equal)
 
+(member 'a '((a b) (c d)) :key #'car)
 
+(member-if #'oddp '(2 3 4))
 
+(defun cxldada-member-if (fn lst)
+  (and (consp lst)
+       (if (funcall fn (car lst))
+           lst
+           (cxldada-member-if fn (cdr lst))
+           )
+       )
+  )
 
+(cxldada-member-if #'oddp '(2 3 4))
 
+(adjoin 'b '(a b c))
 
+(adjoin 'z '(a b c))
 
+(union '(a b c) '(c b s))
 
+(intersection '(a b c) '(b b c))
 
+(set-difference '(a b c d e) '(b e))
 
+(set-difference '(b e) '(a b c d e))
 
+;; sequences
+(length '(a b c))
 
+(subseq '(a b c d e) 0 4)
+(subseq '(a b c d e) 1)
 
+(reverse '(a b c))
 
+(defun mirror? (s)
+  (let
+      ((len (length s)))
+    (and (evenp len)
+         (let ((mid (/ len 2)))
+           (equal (subseq s 0 mid)
+                  (reverse (subseq s mid))
+                  )
+           ))
+      )
+  )
 
-
-
-
-
-
+(mirror? '(a c b a))
 
 
 
