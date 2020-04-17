@@ -83,13 +83,62 @@ Status postOrder(BinTree t, visit_func func) {
 }
 
 Status preOrder_Sq(BinTree t, visit_func func) {
+    SqStack stack;
+    InitStack(&stack);
+    Push(&stack, t);
+
+    while (!StackEmpty(&stack)) {
+        TNode *pRoot = NULL;
+        while (pRoot = GetTop(&stack) && pRoot) {
+            func(pRoot->data);
+            Push(&stack, pRoot->lchild);
+        }
+        Pop(&stack, pRoot);
+        if (!StackEmpty(&stack)) {
+            Pop(&stack, pRoot);
+
+            if (pRoot)
+                Push(&stack, pRoot->rchild);
+        }
+    }
+
+    return OK;
 }
 
 Status inOrder_Sq(BinTree t, visit_func func) {
+    SqStack stack;
+    TNode *p = t;
 
+    while (p || StackEmpty(&stack)) {
+        if (p) {
+            Push(&stack, p);
+            p = p->lchild;
+        } else {
+            Pop(&stack, p);
+            func(p->data);
+            p = p->rchild;
+        }
+    }
+
+    return OK;
 }
 
 Status postOrder_sq(BinTree t, visit_func func) {
+    SqStack stack;
+    TNode *p = t;
+
+    while (p || StackEmpty(&stack)) {
+        if (p) {
+            func(p->data);
+            Push(&stack, p);
+            p = p->lchild;
+        } else {
+            Pop(&stack, p);
+            p = p->rchild;
+        }
+    }
+
+    return OK;
 }
 
 // breadth-first

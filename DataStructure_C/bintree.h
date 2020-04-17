@@ -24,12 +24,13 @@ BinTree rightChild(BinTree t, TNode p);
 Status insertElem(BinTree t, BinTreeElemType e);
 Status deleteElem(BinTree t, BinTreeElemType e);
 
-// traverse
 // depth order
+// use recursion 
 Status preOrder(BinTree t, visit_func func);
 Status inOrder(BinTree t, visit_func func);
 Status postOrder(BinTree t, visit_func func);
 
+// Do not use recursion
 Status preOrder_Sq(BinTree t, visit_func func);
 Status inOrder_Sq(BinTree t, visit_func func);
 Status postOrder_sq(BinTree t, visit_func func);
