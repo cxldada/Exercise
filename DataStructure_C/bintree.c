@@ -143,4 +143,19 @@ Status postOrder_sq(BinTree t, visit_func func) {
 
 // breadth-first
 Status levelOrder(BinTree t, visit_func func) {
+    LinkQueue queue;
+    InitQueue_LQ(&queue);
+
+    EnQueue_LQ(&queue, t);
+    while (!QueueEmpty_LQ(queue)) {
+        QueueElemType p;
+        DeQueue_LQ(&queue, p);
+        if(p)
+            func(p->data);
+
+        EnQueue_LQ(&queue, p->lchild);
+        EnQueue_LQ(&queue, p->rchild);
+    }
+
+    return Ok;
 }
