@@ -1,3 +1,2 @@
 # Exercise
 
-![image-20200507193728017](../images/image-20200507193728017.png)
