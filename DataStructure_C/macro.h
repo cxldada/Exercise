@@ -7,7 +7,6 @@
 #define OVERFLOW -2
 #define TRUE 1
 #define FALSE 0 
-#define _MAXSIZE_ 100
 
 #define LIST_INIT_SIZE 100
 #define LISTINCREMENT 10
