@@ -11,8 +11,22 @@ Status InitList(LinkList list) {
         return OVERFLOW;
 
     list->next = NULL;
-    list->data = 0;
+    list->data = 0; // lenght
     return OK;
+}
+
+void CreateList(LinkList list, int n) {
+    list = (LinkList)malloc(sizeof(LNode));
+    list->data = 0;
+    list->next = NULL;
+
+    for (int i = 0; i < n; ++i) {
+        LNode *p = malloc(sizeof(LNode));
+        scanf(&p->data);
+        p->next = list->next;
+        list->next = p;
+        ++(list->data); // add length
+    }
 }
 
 Status DestoryList(LinkList list) {
@@ -41,12 +55,12 @@ int ListLength(LinkList list) {
     return list->data;
 }
 
-int GetElem(LinkList list, int i, LinkListElemType *elem) {
+Status GetElem(LinkList list, int i, LinkElemType *data) {
     if (i < 1 || i > list->data)
         return ERROR;
 
     LNode *p = list->next;
-    int pos = 0;
+    int pos = 1;
     while (p && pos < i) {
         p = p->next;
         ++pos;
@@ -56,14 +70,10 @@ int GetElem(LinkList list, int i, LinkListElemType *elem) {
     return OK;
 }
 
-int compare(LinkListElemType l, LinkListElemType r) {
-    return (l == r);
-}
-
-LNode *LocateElem(LinkList list, LinkListElemType elem, compare_func func) {
+LNode *LocateElem(LinkList list, LinkElemType elem) {
     LNode *p = list->next;
     while (p) {
-        if (func(elem, p->data))
+        if (elem == p->data))
             return p;
 
         p = p->next;
@@ -72,21 +82,23 @@ LNode *LocateElem(LinkList list, LinkListElemType elem, compare_func func) {
     return NULL;
 }
 
-int ListInsert(LinkList list, int i, LinkListElemType elem) {
-    if (i < 1 || i > list->data)
+Status ListInsert(LinkList list, int i, LinkElemType elem) {
+    if (i < 1 || i > list->data + 1)
         return ERROR;
 
-    LNode *pNew = malloc(sizeof(LNode));
-    if (pNew == NULL)
-        return OVERFLOW;
-    pNew->data = elem;
-
-    int pos = 1;
+    int pos = 0;
     LNode *pPrior = list;
-    while (pPrior && pos < i) {
+    while (pPrior && pos < (i - 1)) {
         pPrior = pPrior->next;
         ++pos;
     }
+    if(!pPrior || pos > (i - 1))return ERROR;
+
+    LNode *pNew = malloc(sizeof(LNode));
+    if (pNew == NULL)
+        exit(OVERFLOW);
+
+    pNew->data = elem;
 
     pNew->next = pPrior->next;
     pPrior->next = pNew;
@@ -95,16 +107,18 @@ int ListInsert(LinkList list, int i, LinkListElemType elem) {
     return OK;
 }
 
-int ListDelete(LinkList list, int i, LinkListElemType *elem) {
+Status ListDelete(LinkList list, int i, LinkElemType *elem) {
     if (i < 1 || i > list->data)
         return ERROR;
 
-    int pos = 1;
+    int pos = 0;
     LNode *pPrior = list;
-    while (pPrior && pos < i) {
+    while (pPrior && pos < (i - 1)) {
         pPrior = pPrior->next;
         ++pos;
     }
+    if (!pPrior || pos > (i - 1))
+        return ERROR;
 
     LNode *pDel = pPrior->next;
     pPrior->next = pDel->next;
@@ -114,50 +128,24 @@ int ListDelete(LinkList list, int i, LinkListElemType *elem) {
     return OK;
 }
 
+void MergeList(LinkList la, LinkList lb, LinkList lc) {
+    lc = la;
+    LNode *pA = la->next, *pB = lb->next, *pC = lc;
+    while (pA && pB) {
+        if(pA->data <= pB->data){
+            pC->next = pA;
+            pC = pA;
+            pA = pA->next;
+        } else {
+            pC->next = pB;
+            pC = pB;
+            pB = pB->next;
+        }
+    }
+    pc->next = pa ? pa : pb;
+    free(lb);
+}
+
 int main(int argc, char const *argv[]) {
     return 0;
-}
-
-// have head node
-Status ListInsert_Dul(DuLinkList list, int i, LinkListElemType e) {
-    if (i < 1 || i > list->data)
-        return ERROR;
-
-    DuLNode *pNew = malloc(sizeof(DuLNode));
-    if (!pNew)
-        return ERROR;
-    pNew->data = e;
-
-    int pos = 1;
-    DuLNode *pNode = list->next;
-    while (pNode && pos < i) {
-        pNode = pNode->next;
-        ++pos;
-    }
-
-    pNew->prior = pNode->prior;
-    pNew->prior->next = pNew;
-    pNew->next = pNode;
-    pNode->prior = pNew;
-
-    ++list->data;
-    return OK;
-}
-
-Status ListDelete_Dul(DuLinkList list, int i, LinkListElemType *elem) {
-    if (i < 1 || i > list->data)
-        return ERROR;
-
-    int pos = 1;
-    DuLNode *pNode = list->next;
-    while (pNode && pos < i) {
-        pNode = pNode->next;
-        ++pos;
-    }
-
-    pNode->prior->next = pNode->next;
-    pNode->next->prior = pNode->prior;
-    free(pNode);
-    --list->data;
-    return OK;
 }

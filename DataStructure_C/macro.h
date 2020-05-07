@@ -9,6 +9,9 @@
 #define FALSE 0 
 #define _MAXSIZE_ 100
 
+#define LIST_INIT_SIZE 100
+#define LISTINCREMENT 10
+
 typedef int Status;
 
 #endif
