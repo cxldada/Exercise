@@ -1,12 +1,13 @@
-#include "stack.h"
+#include "stack_sequence.h"
+#include <stdlib.h>
 
 Status InitStack(SqStack *stack) {
-    stack->base = malloc(_MAXSIZE_ * sizeof(StackElemType));
+    stack->base = malloc(STACK_INIT_SIZE * sizeof(StackElemType));
     if (!stack->base)
         return ERROR;
 
     stack->top = stack->base;
-    stack->stacksize = _MAXSIZE_;
+    stack->size = STACK_INIT_SIZE;
     return OK;
 }
 
@@ -14,7 +15,7 @@ Status DestoryStack(SqStack *stack) {
     ClearStack(stack);
     free(stack->base);
     stack->base = stack->top = NULL;
-    stack->stacksize = 0;
+    stack->size = 0;
     return 0;
 }
 
@@ -33,19 +34,27 @@ int StackLength(SqStack stack) {
     return (stack.top - stack.base);
 }
 
-StackElemType GetTop(SqStack stack) {
-    if (stack.top != stack.base)
-        *(stack.top - 1);
+Status GetTop(SqStack stack, StackElemType *elem) {
+    if (stack.top != stack.base) {
+        *elem = *(stack.top - 1);
+        return OK;
+    }
 
     return ERROR;
 }
 
 Status Push(SqStack *stack, StackElemType e) {
-    if(stack->top - stack->base == stack->stacksize)
-        return ERROR;
+    if(stack->top - stack->base >= stack->size) {
+        stack->base = realloc(stack->base,
+                              (stack->size + STACKINCREMENT) * (sizeof(StackElemType)));
+        if (!stack->base)
+            exit(OVERFLOW);
+        
+        stack->top = stack->base + stack->size;
+        stack->size += STACKINCREMENT;
+    }
 
-    *stack->top = e;
-    ++stack->top;
+    *stack->top++ = e;
     return OK;
 }
 
@@ -53,7 +62,6 @@ Status Pop(SqStack *stack, StackElemType *e) {
     if (stack->top == stack->base)
         return ERROR;
 
-    e = *(stack->top - 1);
-    --stack->top;
+    *e = *--stack->top;
     return OK;
 }

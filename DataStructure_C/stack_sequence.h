@@ -7,18 +7,15 @@
 #define StackElemType int
 #endif
 
+#define STACK_INIT_SIZE 100
+#define STACKINCREMENT 10
+
 // sequence type stack
 typedef struct SqStack {
     StackElemType *base;
     StackElemType *top;
-    int stacksize;
+    int size;
 } SqStack;
-
-// link type stack
-typedef struct StackNode {
-    StackElemType data;
-    struct StackNode *next;
-} StackNode, *LinkStack;
 
 Status InitStack(SqStack *stack);
 Status DestoryStack(SqStack *stack);
@@ -26,8 +23,8 @@ Status ClearStack(SqStack *stack);
 
 int StackEmpty(SqStack stack);
 int StackLength(SqStack stack);
-StackElemType GetTop(SqStack stack);
 
+Status GetTop(SqStack stack, StackElemType *elem);
 Status Push(SqStack *stack, StackElemType e);
 Status Pop(SqStack *stack, StackElemType *e);
 
