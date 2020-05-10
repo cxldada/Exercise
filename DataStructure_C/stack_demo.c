@@ -62,8 +62,34 @@ void matchBracket() {
     }
 }
 
+void LineEdit() {
+    SqStack stack;
+    InitStack(&stack);
+    char ch = getchar(), c;
+    whlie(ch != EOF) {
+        whlie(ch != EOF && ch != '\n') {
+            switch (ch) {
+                case '#':
+                    Pop(&stack, c);
+                    break;
+                case '@':
+                    ClearStack(&stack);
+                    break;
+                default:
+                    Push(&stack, ch);
+                    break;
+            }
+        }
+        // 字符串收集处理
+        ClearStack(&stack);
+        if(ch != EOF)
+            ch = getchar();
+    }
+    DestoryStack(&stack);
+}
+
 int main() {
-    //conversion();
-    matchBracket();
+    // conversion();
+    // matchBracket();
     exit(0);
 }
