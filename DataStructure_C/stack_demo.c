@@ -66,8 +66,8 @@ void LineEdit() {
     SqStack stack;
     InitStack(&stack);
     char ch = getchar(), c;
-    whlie(ch != EOF) {
-        whlie(ch != EOF && ch != '\n') {
+    while (ch != EOF) {
+        while (ch != EOF && ch != '\n') {
             switch (ch) {
                 case '#':
                     Pop(&stack, c);
