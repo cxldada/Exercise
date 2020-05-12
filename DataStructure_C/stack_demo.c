@@ -88,6 +88,23 @@ void LineEdit() {
     DestoryStack(&stack);
 }
 
+void move(char x, int n, char y) {
+    printf("move %d: from %s to %s", x, y);
+}
+
+// hanoi
+void hanoi(int n, char x, char y, char z) {
+    if(n == 1) {
+        move(x, 1, z);
+    }
+    else {
+        // 将第二大的挪到 中间的柱子去
+        hanoi(n - 1, x, z, y);
+        move(x, n, y);
+        hanoi(n - 1, y, x, z);
+    }
+}
+
 int main() {
     // conversion();
     // matchBracket();
