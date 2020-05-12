@@ -23,12 +23,12 @@ void conversion() {
 }
 
 void matchBracket() {
-    char *str;
+    char str[10];
     SqStack stack;
     InitStack(&stack);
     printf("please input check string: ");
     scanf("%s", str);
-    for (int i = 0; str[i] != '\n'; ++i) {
+    for (int i = 0; str[i] != '\0'; ++i) {
         int e;
         GetTop(stack, &e);
         switch (str[i]) {
