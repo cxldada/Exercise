@@ -23,12 +23,12 @@ void conversion() {
 }
 
 void matchBracket() {
-    char *str;
+    char str[10];
     SqStack stack;
     InitStack(&stack);
     printf("please input check string: ");
     scanf("%s", str);
-    for (int i = 0; str[i] != '\n'; ++i) {
+    for (int i = 0; str[i] != '\0'; ++i) {
         int e;
         GetTop(stack, &e);
         switch (str[i]) {
@@ -86,6 +86,23 @@ void LineEdit() {
             ch = getchar();
     }
     DestoryStack(&stack);
+}
+
+void move(char x, int n, char y) {
+    printf("move %d: from %s to %s", x, y);
+}
+
+// hanoi
+void hanoi(int n, char x, char y, char z) {
+    if(n == 1) {
+        move(x, 1, z);
+    }
+    else {
+        // 将第二大的挪到 中间的柱子去
+        hanoi(n - 1, x, z, y);
+        move(x, n, y);
+        hanoi(n - 1, y, x, z);
+    }
 }
 
 int main() {
