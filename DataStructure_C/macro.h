@@ -1,6 +1,12 @@
 #ifndef __MACRO_H__
 #define __MACRO_H__
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <unistd.h>
+
 #define OK 1
 #define ERROR 0
 #define INFEASIBLE -1
