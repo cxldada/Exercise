@@ -1,4 +1,5 @@
 *app*
 *.dSYM
+*.out
 .DS_Store
 *.out
