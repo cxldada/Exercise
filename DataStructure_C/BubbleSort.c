@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
 void BubbleSort(int arr[], int size) {
     for (int i = 0; i < size; ++i) {
@@ -22,6 +23,6 @@ void BubbleSort(int arr[], int size) {
 int main() {
     int arr[5] = {5, 3, 0, 10, 9};
     BubbleSort(arr, 5);
-
+    
     exit(0);
 }
