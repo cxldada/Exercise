@@ -2,6 +2,7 @@
 2. 1501
 3. -1547
 4. 42031180
+6. 2.1948813406085
 */
 #include <iostream>
 #include <string>
