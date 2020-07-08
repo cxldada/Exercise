@@ -27,8 +27,6 @@ UNIX系统中的`shell`会把：
 
 ------
 
-----
-
 
 
 ## open和openat函数
@@ -120,8 +118,6 @@ int openat(int fd,const char *path,int oflag,...);
 
 ----
 
-----
-
 
 
 ## creat函数
@@ -172,8 +168,6 @@ int open(path,O_WRONLY | O_CREAT | O_TRUNC,mode);
 mode参数指定的权限回收`umake`值得影响
 
 
-
-----
 
 ----
 
@@ -240,8 +234,6 @@ off_t lseek(int fd, off_t offset, int whence);
 
 ----
 
-----
-
 
 
 ## read函数
@@ -278,8 +270,6 @@ ssize_t read(int fd, void *buf, size_t nbytes);
 
 ----
 
-----
-
 
 
 ## write函数
@@ -308,8 +298,6 @@ ssize_t write(int fd, const void *buf, size_t nbytes);
 * 如果打开文件时指定了`O_APPEND`选项，则每次写操作前，会将文件偏移量设置到文件结尾处，再写入数据。
 
 
-
-----
 
 ----
 
