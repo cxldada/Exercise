@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from Crypto.Cipher import AES
 import base64
 import time
 import gzip
 from hashlib import md5
 import sys
 import io
+from Crypto.Cipher import AES
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8', line_buffering=True)
 
 i = 0
