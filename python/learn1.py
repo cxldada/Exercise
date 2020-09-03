@@ -53,3 +53,11 @@ def f(ham: str, eggs: str ='eggs') -> str:
     return ham + ' and ' + eggs
 
 f('spam')
+
+import fibo
+
+farr = fibo.fib2(1000)
+print(fibo.__name__)
+
+print(sys.path)
+
