@@ -61,10 +61,13 @@ Status ListInsert_Sq(Sqlist *l, int i, ElemType e) {
         l->listsize += LIST_INCREMENT;
     }
 
-    for (int p = l->length; p >= i; --p) {
-        l->elem[p] = l->elem[p - 1];
+    ElemType *q, *p;
+    q = &(l->elem[i - 1]);
+    for (p = &(l->elem[l->length - 1]); p >= q; --p) {
+        *(p + 1) = *p;
     }
-    l->elem[i - 1] = e;
+
+    *q = e;
     ++(l->length);
     return OK;
 }
@@ -74,11 +77,16 @@ Status ListDelete_Sq(Sqlist *l, int i, ElemType *e) {
     if(l->length == 0 || i < 1 || i > l->length)
         return ERROR;
 
-    *e = l->elem[(i - 1)];
-    for (int p = i; p < l->listsize; ++p) {
-        l->elem[(i - 1)] = l->elem[i];
+    ElemType *p, *q;
+    p = &(l->elem[i - 1]);
+    q = l->elem + l->length - 1;
+    *e = *p;
+
+    for (++p; p <= q; ++p) {
+        *(p - 1) = *p;
     }
-    --(l->listsize);
+
+    --(l->length);
     return OK;
 }
 
@@ -134,4 +142,16 @@ void MergeList_Sq(Sqlist la, Sqlist lb, Sqlist *lc) {
     while(j < lb.length) {
         lc->elem[k++] = lb.elem[j++];
     }
+}
+
+int main() {
+    Sqlist l;
+    if(!InitList_Sq(&l))
+        exit(1);
+
+    ListInsert_Sq(&l, 1, 2);
+
+    ListTraverse(l);
+
+    return 0;
 }
