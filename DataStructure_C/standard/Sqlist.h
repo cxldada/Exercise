@@ -1,21 +1,13 @@
 #ifndef _SEQUENCE_LIST_H_
 #define _SEQUENCE_LIST_H_
 
-#define TRUE 1
-#define FALSE 0
-#define OK 1
-#define ERROR 0
-#define INFEASIBLE -1
-#define OVERFLOW -2
+#include "common.h"
 
 // 线性表的存储空间的初始分配量
 #define LIST_INIT_SIZE 100
 
 // 线性表存储空间的分配增量
 #define LIST_INCREMENT 10
-
-typedef int Status;
-typedef int ElemType;
 
 typedef struct {
     ElemType *elem; // 存储空间基址
