@@ -92,14 +92,21 @@ Status ListDelete_Sq(Sqlist *l, int i, ElemType *e) {
 
 // 查找第一个与e符合compare关系的元素
 // int compare(ElemType a, ElemType b){}
-int LocateElem_Sq(Sqlist l, ElemType e, int *compare(ElemType, ElemType)) {
-    for (int i = 0; i < l.length; ++i) {
-        if (compare(l.elem[i], e) == 0) {
-            return (i + 1);
-        }
-    }
+int LocateElem_Sq(Sqlist l, ElemType e, Status *compare(ElemType, ElemType)) {
+    // for (int i = 0; i < l.length; ++i) {
+    //     if (compare(l.elem[i], e) == OK) {
+    //         return (i + 1);
+    //     }
+    // }
 
-    return 0;
+    // return 0;
+    int i = 1;
+    ElemType *p = l.elem;
+    while (i <= l.length && !(*compare)(*p++, e)) ++i;
+    if (i <= l.length)
+        return i;
+    else
+        return 0;
 }
 
 // 遍历打印顺序表

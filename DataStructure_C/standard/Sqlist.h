@@ -51,7 +51,7 @@ Status ListDelete_Sq(Sqlist *l, int i, ElemType *e);
 
 // 查找第一个与e符合compare关系的元素
 // int compare(ElemType a, ElemType b);
-int LocateElem_Sq(Sqlist l, ElemType e, int *compare(ElemType, ElemType));
+int LocateElem_Sq(Sqlist l, ElemType e, Status *compare(ElemType, ElemType));
 
 // 遍历打印顺序表
 Status ListTraverse(Sqlist l);
