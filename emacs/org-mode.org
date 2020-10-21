@@ -1,0 +1,77 @@
+* *一级目录
+** 二级目录
+   这是二级目录中的内容，看看折叠的效果
+   感觉还不错
+
+* 第二个主题
+  - treeroot
+    - branch1
+    - branch2
+
+  - [X] 任务一[100%]
+    1. [X] 子任务一
+    2. [X] haha
+    3. [X] 子任务二
+
+
+用[fn:1]的方式做脚注
+
+
+
+[fn:1]这是一个脚注
+
+
+| Name    | Phone         | sub1 | sub2 | sub3        |
+|---------+---------------+------+------+-------------|
+| apple   | iphone 12     | 3999 | 5G   | double card |
+| samsung | s20           | 6999 | 5G   | double card |
+| oneplus | oneplus 8 pro | 5999 | 5G   | double card |
+| xiaomi  | 10pro         | 4999 | 5G   | double card |
+| total   | 0             | 8998 |      |             |
+#+TBLFM: $3=@2+@5
+
+
+* 洗衣服
+  ** 章标题   :work:learn:
+**** 节标题1     :fly:plane:
+**** 节标题2                                                   :car:run:haha:
+
+<2020-10-13 Tue>
+
+# +BEGIN_QUOTE
+Everything should be made as simple as possible,
+but not any simpler --Albert Einstein
+# +end_QUOTE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

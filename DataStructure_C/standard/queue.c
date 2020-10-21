@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <Stdbool.h>
+#include <stdbool.h>
 #include "common.h"
 
 #define MAX_SIZE 50
